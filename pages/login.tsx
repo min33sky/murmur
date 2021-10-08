@@ -5,6 +5,7 @@ import AuthButton from '../components/Auth/AuthButton';
 import AuthFooter from '../components/Auth/AuthFooter';
 import AuthInput from '../components/Auth/AuthInput';
 import Layout from '../components/Layout';
+import { useRouter } from 'next/router';
 
 /**
  * 로그인 페이지
@@ -13,6 +14,7 @@ import Layout from '../components/Layout';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,8 +22,11 @@ function Login() {
       console.log('eamil: ', email);
       console.log('password: ', password);
       console.log('로그인 요청');
+
+      //* 일단 로그인 시킨다. (메인 페이지로 이동)
+      router.push('/');
     },
-    [email, password]
+    [email, password, router]
   );
 
   return (

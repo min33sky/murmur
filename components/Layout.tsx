@@ -9,7 +9,9 @@ function Layout({ children }: ILayout) {
   return (
     <div className="min-h-screen bg-indigo-50 ">
       <Header />
-      <main className="container mx-auto">{children}</main>
+      <main className="px-2 mx-auto sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg">
+        {children}
+      </main>
     </div>
   );
 }
