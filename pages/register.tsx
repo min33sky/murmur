@@ -1,8 +1,21 @@
 import Link from 'next/link';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
+import AuthButton from '../components/Auth/AuthButton';
+import AuthFooter from '../components/Auth/AuthFooter';
+import AuthInput from '../components/Auth/AuthInput';
 import Layout from '../components/Layout';
 
+/**
+ * 회원 가입 페이지
+ * /register
+ * @returns
+ */
 function Register() {
+  const [email, setEmail] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
+
   const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('회원 가입 버튼');
@@ -10,40 +23,25 @@ function Register() {
 
   return (
     <Layout>
-      <div className="absolute inset-0 flex items-center justify-center flex-col">
-        <h1 className="text-2xl font-bold mb-4">회원 가입</h1>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <h1 className="mb-4 text-2xl font-bold tracking-wider">REGISTER</h1>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col space-y-4 w-full md:max-w-screen-md px-2"
+          className="flex flex-col w-full px-2 space-y-4 md:max-w-screen-md"
         >
-          <div className="relative ">
-            <input
-              type="text"
-              id="email"
-              placeholder="email"
-              className="w-full p-4 text-lg placeholder-transparent border border-indigo-400 rounded-md outline-none peer"
-            />
-            <label htmlFor="email" className="auth-label">
-              Email Address
-            </label>
-          </div>
+          <AuthInput type="email" label="Email Address" value={email} onChange={setEmail} />
+          <AuthInput type="text" label="Nickname" value={nickname} onChange={setNickname} />
+          <AuthInput type="password" label="Password" value={password} onChange={setPassword} />
+          <AuthInput
+            type="passwordCheck"
+            label="PasswordCheck"
+            value={passwordCheck}
+            onChange={setPasswordCheck}
+          />
 
           {/* 버튼 */}
-          <button
-            type="submit"
-            className="bg-indigo-300 py-4 cursor-pointer hover:bg-indigo-400 duration-200 transition ease-out text-2xl text-white"
-          >
-            회원 가입
-          </button>
-
-          <footer className="m-4">
-            <p className="text-right">
-              이미 가입했다면?
-              <Link href="/login">
-                <a className="hover:text-pink-500 text-pink-600"> 로그인</a>
-              </Link>{' '}
-            </p>
-          </footer>
+          <AuthButton disabled={true}>회원 가입</AuthButton>
+          <AuthFooter to="login" description="계정이 없다면?" />
         </form>
       </div>
     </Layout>

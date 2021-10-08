@@ -7,7 +7,7 @@ interface ILayout {
 
 function Layout({ children }: ILayout) {
   return (
-    <div className="bg-indigo-100 min-h-screen ">
+    <div className="min-h-screen bg-indigo-50 ">
       <Header />
       <main className="container mx-auto">{children}</main>
     </div>
