@@ -17,7 +17,17 @@ function PostForm() {
 
   const handleUploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    console.log('files: ', files);
+
+    if (files && files?.length > 0) {
+      const fileReader = new FileReader();
+      console.log('files: ', files);
+      fileReader.readAsDataURL(files[0]);
+
+      fileReader.onload = (e) => {
+        const imageDataURL = e.target?.result;
+        console.log('이미지: ', imageDataURL);
+      };
+    }
   }, []);
 
   return (
