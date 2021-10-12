@@ -23,10 +23,10 @@ function Header() {
         </Link>
 
         {/* 검색창 */}
-        <div className="flex items-center px-1 py-1 bg-indigo-100 border rounded-2xl md:flex-grow md:mr-24 ">
+        <div className="flex items-center max-w-4xl px-1 py-1 bg-indigo-100 border rounded-full md:flex-grow md:mr-24 ">
           <input
             type="text"
-            className="flex-grow px-2 py-2 mr-2 font-bold outline-none rounded-2xl "
+            className="flex-grow px-2 py-2 font-bold rounded-full outline-none "
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             placeholder="Search...."
