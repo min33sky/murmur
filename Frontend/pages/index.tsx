@@ -1,14 +1,13 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Layout from '../components/Layout';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { postsListState } from '../store/posts';
 import PostForm from '../components/Post/PostForm';
+import PostCard from '../components/Post/PostCard';
 
 const Home: NextPage = () => {
   const postsList = useRecoilValue(postsListState);
-
-  console.log('포스트 리스트: ', postsList);
 
   return (
     <Layout>
@@ -19,7 +18,14 @@ const Home: NextPage = () => {
       </Head>
 
       <h1 className="text-4xl font-bold text-indigo-600">Hello World</h1>
+
       <PostForm />
+
+      <div className="mt-4">
+        {postsList.map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
+      </div>
     </Layout>
   );
 };
