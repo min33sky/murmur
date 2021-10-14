@@ -21,15 +21,15 @@ function PostForm() {
   const handleUploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
 
-    if (files && files?.length > 0) {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(files[0]);
+    function readAndPreview(file: File) {
+      // console.log('file: ', file);
+      if (/\.(jpe?g|png|gif|webp)$/i.test(file.name)) {
+        console.log('통과');
+      }
+    }
 
-      fileReader.onload = (e) => {
-        const imageDataURL = e.target?.result?.toString()!;
-        console.log('이미지: ', imageDataURL);
-        setimagesPreview((prev) => [...prev, imageDataURL]);
-      };
+    if (files && files.length > 0) {
+      [].forEach.call(files, readAndPreview);
     }
   }, []);
 
@@ -62,7 +62,7 @@ function PostForm() {
       )}
 
       <footer className="flex items-center justify-between px-4 py-2">
-        <input hidden type="file" ref={imageUploadRef} onChange={handleUploadImage} />
+        <input hidden multiple type="file" ref={imageUploadRef} onChange={handleUploadImage} />
         <PhotographIcon
           className="h-10 transition duration-200 ease-in-out opacity-50 cursor-pointer hover:opacity-100"
           onClick={handleClickUploadImage}
