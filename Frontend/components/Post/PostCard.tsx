@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { IPost } from '../../store/posts';
 import Gravatar from 'react-gravatar';
 import Image from 'next/image';
 import { HeartIcon, ChatAltIcon, ShareIcon } from '@heroicons/react/outline';
 import { DuplicateIcon } from '@heroicons/react/solid';
 import ImageCarousel from '../ImageCarousel/ImageCarousel';
+import CommentForm from '../Comment/CommentForm';
+import CommentList from '../Comment/CommentList';
+import { IPost } from '../../typings/posts';
 
 interface IPostCard {
   post: IPost;
@@ -12,6 +14,7 @@ interface IPostCard {
 
 function PostCard({ post: { id, content, likes, User, Images, Comments } }: IPostCard) {
   const [showCarousel, setShowCarousel] = useState(false);
+  const [showComment, setShowComment] = useState(false);
   const [favorite, setFavorite] = useState(false);
 
   return (
@@ -55,9 +58,20 @@ function PostCard({ post: { id, content, likes, User, Images, Comments } }: IPos
             />
             <p>{likes.length}</p>
           </div>
-          <ChatAltIcon className="h-8 cursor-pointer" />
+          <ChatAltIcon
+            onClick={() => setShowComment((prev) => !prev)}
+            className="h-8 cursor-pointer"
+          />
           <ShareIcon className="h-8 cursor-pointer" />
         </footer>
+
+        {/* 댓글 관련 */}
+        {showComment && (
+          <div>
+            <CommentForm />
+            <CommentList comments={Comments} />
+          </div>
+        )}
       </div>
 
       {/* Image Carousel */}

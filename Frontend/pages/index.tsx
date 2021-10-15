@@ -17,8 +17,6 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-4xl font-bold text-indigo-600">Hello World</h1>
-
       <PostForm />
 
       <div className="mt-4">
