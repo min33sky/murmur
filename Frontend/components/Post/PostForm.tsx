@@ -22,9 +22,14 @@ function PostForm() {
     const files = e.target.files;
 
     function readAndPreview(file: File) {
-      // console.log('file: ', file);
       if (/\.(jpe?g|png|gif|webp)$/i.test(file.name)) {
-        console.log('통과');
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+
+        fileReader.onload = (e) => {
+          const dataURL = e.target?.result?.toString()!;
+          setimagesPreview((prev) => [...prev, dataURL]);
+        };
       }
     }
 
