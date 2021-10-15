@@ -62,19 +62,24 @@ function PostForm() {
 
       {imagesPreview.length > 0 && (
         <div>
-          <p className="mt-2 text-sm text-gray-600 select-none">이미지 미리보기</p>
-          <section className="flex mt-2 space-x-1">
+          <p className="mt-2 text-sm text-gray-600 select-none">Upload Images</p>
+          <section className="flex flex-wrap">
             {imagesPreview.map((image, idx) => (
-              <Image
-                key={`image-preview-${idx}`}
-                src={image}
-                alt={`image-preview-${idx}`}
-                width={100}
-                height={100}
-                layout="fixed"
-                onClick={() => handleRemoveImagePreview(idx)}
-                className="cursor-pointer"
-              />
+              <div key={`image-preview-${idx}`} className="relative w-20 h-20 mt-2 mr-2">
+                <Image
+                  src={image}
+                  alt={`image-preview-${idx}`}
+                  layout="fill"
+                  onClick={() => handleRemoveImagePreview(idx)}
+                  className="rounded-md cursor-pointer"
+                />
+                <div
+                  onClick={() => handleRemoveImagePreview(idx)}
+                  className="absolute inset-0 grid transition duration-200 ease-out rounded-md opacity-0 cursor-pointer hover:bg-black hover:opacity-80 place-items-center"
+                >
+                  <p className="font-bold text-white ">삭제</p>
+                </div>
+              </div>
             ))}
           </section>
         </div>
