@@ -1,4 +1,4 @@
-import { PhotographIcon } from '@heroicons/react/solid';
+import { PhotographIcon, TrashIcon } from '@heroicons/react/solid';
 import React, { MutableRefObject, useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
 
@@ -76,8 +76,10 @@ function PostForm() {
                 <div
                   onClick={() => handleRemoveImagePreview(idx)}
                   className="absolute inset-0 grid transition duration-200 ease-out rounded-md opacity-0 cursor-pointer hover:bg-black hover:opacity-80 place-items-center"
+                  aria-label="Remove Image Preview"
                 >
-                  <p className="font-bold text-white ">삭제</p>
+                  {/* <p className="font-bold text-white ">삭제</p> */}
+                  <TrashIcon className="h-5 text-gray-400" />
                 </div>
               </div>
             ))}
