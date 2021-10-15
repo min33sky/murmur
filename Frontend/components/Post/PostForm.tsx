@@ -2,6 +2,10 @@ import { PhotographIcon } from '@heroicons/react/solid';
 import React, { MutableRefObject, useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
 
+/**
+ * 포스트 등록 폼
+ * @returns
+ */
 function PostForm() {
   const [imagesPreview, setimagesPreview] = useState<string[]>([]);
 
@@ -38,6 +42,14 @@ function PostForm() {
     }
   }, []);
 
+  const handleRemoveImagePreview = useCallback(
+    (index: number) => {
+      const updated = imagesPreview.filter((_, idx) => idx !== index);
+      setimagesPreview(updated);
+    },
+    [imagesPreview]
+  );
+
   return (
     <form
       onSubmit={handleSumbit}
@@ -60,6 +72,8 @@ function PostForm() {
                 width={100}
                 height={100}
                 layout="fixed"
+                onClick={() => handleRemoveImagePreview(idx)}
+                className="cursor-pointer"
               />
             ))}
           </section>
