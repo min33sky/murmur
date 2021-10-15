@@ -10,12 +10,13 @@ interface IPostCard {
   post: IPost;
 }
 
-function PostCard({ post: { id, content, User, Images, Comments } }: IPostCard) {
+function PostCard({ post: { id, content, likes, User, Images, Comments } }: IPostCard) {
   const [showCarousel, setShowCarousel] = useState(false);
+  const [favorite, setFavorite] = useState(false);
 
   return (
     <>
-      <div className="px-4 py-4 rounded-lg shadow-lg bg-gray-50">
+      <div className="px-4 py-4 rounded-lg shadow-lg bg-gray-50 ">
         <header className="flex items-center">
           <Gravatar email="default" className="w-8 h-8 mr-2 rounded-full" />
           <p className="mr-2 text-lg font-bold text-gray-500 ">{User.nickname}</p>
@@ -47,7 +48,13 @@ function PostCard({ post: { id, content, User, Images, Comments } }: IPostCard) 
         <p className="mt-4 text-gray-700">{content}</p>
 
         <footer className="grid grid-cols-3 mt-4 place-items-center ">
-          <HeartIcon className="h-8 cursor-pointer " />
+          <div className="flex items-center space-x-2">
+            <HeartIcon
+              onClick={() => setFavorite((prev) => !prev)}
+              className={`h-8 cursor-pointer ${favorite && 'text-red-500 fill-current'} `}
+            />
+            <p>{likes.length}</p>
+          </div>
           <ChatAltIcon className="h-8 cursor-pointer" />
           <ShareIcon className="h-8 cursor-pointer" />
         </footer>

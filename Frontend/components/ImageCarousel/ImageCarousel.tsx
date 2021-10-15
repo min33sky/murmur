@@ -18,15 +18,22 @@ function ImageCarousel({ onClose, images }: IImageCarousel) {
   return (
     <div className="fixed inset-0 z-50 grid place-items-center">
       <div className="fixed inset-0 bg-black bg-opacity-90" onClick={onClose} />
-      <Carousel autoPlay infiniteLoop showThumbs={false} showStatus={false}>
+      <Carousel
+        className="md:w-2/3"
+        autoPlay
+        infiniteLoop
+        showThumbs={false}
+        showStatus={false}
+        swipeable
+      >
         {images.map((image, index) => (
           <Image
             key={`carousel-image-${index}`}
             loading="lazy"
             src={image.src}
             alt={`carousel-image-${index}`}
-            width={1536}
-            height={700}
+            width={1100}
+            height={600}
             objectFit="cover"
           />
         ))}

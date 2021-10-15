@@ -3,11 +3,12 @@ import { atom } from 'recoil';
 export interface IPost {
   id: number;
   content: string;
+  likes: number[]; //? 좋아요를 누른 사람들의 아이디
   User: {
     id: number;
     nickname: string;
-  };
-  Images: { src: string }[];
+  }; // 포스트 작성자
+  Images: { src: string }[]; // 포스트에 포함된 이미지들
   Comments: {
     id: number;
     content: string;
@@ -24,6 +25,7 @@ export const postsListState = atom<IPost[]>({
     {
       id: 1,
       content: '첫 번째 게시물 #해시태그 #리액트',
+      likes: [1, 2],
       User: {
         id: 1,
         nickname: 'messi',
