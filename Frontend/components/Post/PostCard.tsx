@@ -7,6 +7,7 @@ import ImageCarousel from '../ImageCarousel/ImageCarousel';
 import CommentForm from '../Comment/CommentForm';
 import CommentList from '../Comment/CommentList';
 import { IPost } from '../../typings/posts';
+import PostCardContent from './PostCardContent';
 
 interface IPostCard {
   post: IPost;
@@ -48,7 +49,7 @@ function PostCard({ post: { id, content, likes, User, Images, Comments } }: IPos
           )}
         </div>
 
-        <p className="mt-4 text-gray-700">{content}</p>
+        <PostCardContent content={content} />
 
         <footer className="grid grid-cols-3 mt-4 place-items-center ">
           <div className="flex items-center space-x-2">
@@ -65,7 +66,7 @@ function PostCard({ post: { id, content, likes, User, Images, Comments } }: IPos
           <ShareIcon className="h-8 cursor-pointer" />
         </footer>
 
-        {/* 댓글 관련 */}
+        {/************************************ 댓글 관련 *************************************************/}
         {showComment && (
           <div>
             <CommentForm />
