@@ -3,16 +3,25 @@ import { MenuIcon, SearchIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import Gravatar from 'react-gravatar';
 import router from 'next/router';
+import { useRecoilState } from 'recoil';
+import { userState } from '../store/user';
 
+/**
+ * 메인 헤더
+ * @returns
+ */
 function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [loggedInUser, setLoggedInUser] = useRecoilState(userState);
+
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [openedButton, setOpenedButton] = useState(false);
 
   const [keyword, setKeyword] = useState('');
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
-  }, []);
+    // setIsLoggedIn(false);
+    setLoggedInUser(null);
+  }, [setLoggedInUser]);
 
   return (
     <div className="sticky top-0 z-50 flex flex-col px-2 pt-4 bg-white shadow-lg md:flex-row md:pb-4 md:justify-between md:px-6 md:items-center">
@@ -38,14 +47,14 @@ function Header() {
 
         {/* 햄버거 버튼 */}
         <div className="flex items-center">
-          {isLoggedIn && (
+          {loggedInUser && (
             <div className="flex items-center mr-2 space-x-4">
               <Gravatar
-                email="messi@naver.com"
+                email={loggedInUser.email}
                 className="w-10 h-10 transition rounded-full cursor-pointer hover:scale-110"
                 onClick={() => router.push('/profile')}
               />
-              <p className="hidden text-lg font-bold md:inline-flex">UserName</p>
+              <p className="hidden text-lg font-bold md:inline-flex">{loggedInUser.nickname}</p>
             </div>
           )}
           <MenuIcon
@@ -61,7 +70,7 @@ function Header() {
           openedButton ? 'h-32' : 'h-0'
         } `}
       >
-        {!isLoggedIn && (
+        {!loggedInUser && (
           <>
             <Link href="/register">
               <a className="w-full text-center">회원가입</a>
@@ -71,7 +80,7 @@ function Header() {
             </Link>
           </>
         )}
-        {isLoggedIn && (
+        {loggedInUser && (
           <>
             <Link href="/">
               <a className="w-full text-center" onClick={logout}>

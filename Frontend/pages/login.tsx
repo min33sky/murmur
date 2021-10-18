@@ -6,12 +6,16 @@ import AuthFooter from '../components/Auth/AuthFooter';
 import AuthInput from '../components/Auth/AuthInput';
 import Layout from '../components/Layout';
 import { useRouter } from 'next/router';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '../store/user';
 
 /**
  * 로그인 페이지
  * @returns
  */
 function Login() {
+  const setLogIn = useSetRecoilState(userState);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
@@ -23,10 +27,18 @@ function Login() {
       console.log('password: ', password);
       console.log('로그인 요청');
 
+      setLogIn({
+        id: '1',
+        email: 'messi@naver.com',
+        nickname: 'messi',
+        Posts: [],
+        Followers: [],
+        Follwings: [],
+      });
       //* 일단 로그인 시킨다. (메인 페이지로 이동)
       router.push('/');
     },
-    [email, password, router]
+    [email, password, router, setLogIn]
   );
 
   return (

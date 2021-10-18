@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import Gravatar from 'react-gravatar';
 import Image from 'next/image';
-import { HeartIcon, ChatAltIcon, ShareIcon } from '@heroicons/react/outline';
-import { DuplicateIcon } from '@heroicons/react/solid';
+import { HeartIcon, ChatAltIcon, ShareIcon, DuplicateIcon } from '@heroicons/react/outline';
 import ImageCarousel from '../ImageCarousel/ImageCarousel';
-import CommentForm from '../Comment/CommentForm';
-import CommentList from '../Comment/CommentList';
 import { IPost } from '../../typings/posts';
 import PostCardContent from './PostCardContent';
+import Comment from '../Comment/Comment';
 
 interface IPostCard {
   post: IPost;
@@ -22,10 +20,10 @@ function PostCard({ post: { id, content, likes, User, Images, Comments } }: IPos
     <>
       <div className="px-4 py-4 rounded-lg shadow-lg bg-gray-50 ">
         <header className="flex items-center">
-          <Gravatar email="default" className="w-8 h-8 mr-2 rounded-full" />
+          <Gravatar email={User.email} className="w-8 h-8 mr-2 rounded-full" />
           <p className="mr-2 text-lg font-bold text-gray-500 ">{User.nickname}</p>
           <button className="px-3 py-2 text-sm text-white transition duration-200 ease-out bg-indigo-400 rounded-lg hover:bg-indigo-500">
-            팔로우 버튼
+            팔로우
           </button>
         </header>
 
@@ -35,6 +33,8 @@ function PostCard({ post: { id, content, likes, User, Images, Comments } }: IPos
             <div className="relative flex h-96 ">
               <Image
                 loading="lazy"
+                placeholder="blur"
+                blurDataURL="https://fakeimg.pl/640x360"
                 key={Images[0].src}
                 src={Images[0].src}
                 alt={`image`}
@@ -42,9 +42,11 @@ function PostCard({ post: { id, content, likes, User, Images, Comments } }: IPos
                 className="object-cover rounded-md cursor-pointer hover:bg-black hover:opacity-60 "
                 onClick={() => setShowCarousel(true)}
               />
-              <div className="absolute top-2 right-2 ">
-                <DuplicateIcon className="h-5 cursor-pointer" />
-              </div>
+              {Images.length > 1 && (
+                <div className="absolute top-2 right-2 ">
+                  <DuplicateIcon className="h-10 text-indigo-500 cursor-pointer" />
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -66,13 +68,8 @@ function PostCard({ post: { id, content, likes, User, Images, Comments } }: IPos
           <ShareIcon className="h-8 cursor-pointer" />
         </footer>
 
-        {/************************************ 댓글 관련 *************************************************/}
-        {showComment && (
-          <div>
-            <CommentForm />
-            <CommentList comments={Comments} />
-          </div>
-        )}
+        {/************************************** 댓글 관련 *************************************************/}
+        <Comment comments={Comments} show={showComment} />
       </div>
 
       {/* Image Carousel */}

@@ -1,6 +1,10 @@
 import React, { useCallback, useState } from 'react';
 
-function CommentForm() {
+interface ICommentForm {
+  show: boolean;
+}
+
+function CommentForm({ show }: ICommentForm) {
   const [comment, setComment] = useState('');
 
   const handleChangeComment = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -25,6 +29,10 @@ function CommentForm() {
       }
     }
   };
+
+  if (!show) {
+    return null;
+  }
 
   return (
     <form

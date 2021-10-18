@@ -1,19 +1,20 @@
 export type CommentType = {
-  id: number;
+  id: string;
   content: string;
   User: {
-    id: number;
+    id: string;
     nickname: string;
   };
 };
 
 export interface IPost {
-  id: number;
+  id: string;
   content: string;
   likes: number[]; //? 좋아요를 누른 사람들의 아이디
   User: {
-    id: number;
+    id: string;
     nickname: string;
+    email: string;
   }; // 포스트 작성자
   Images: { src: string }[]; // 포스트에 포함된 이미지들
   Comments: CommentType[];

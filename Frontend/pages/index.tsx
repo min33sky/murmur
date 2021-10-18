@@ -1,13 +1,23 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Layout from '../components/Layout';
-import { useRecoilValue } from 'recoil';
-import { postsListState } from '../store/posts';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { dummyData, postsListState } from '../store/posts';
 import PostForm from '../components/Post/PostForm';
 import PostCard from '../components/Post/PostCard';
+import { useCallback } from 'react';
 
 const Home: NextPage = () => {
   const postsList = useRecoilValue(postsListState);
+  const setPostsList = useSetRecoilState(postsListState);
+
+  const handleLoadMore = useCallback(() => {
+    console.log('더 보기');
+    const extraData = dummyData();
+    setPostsList((prev) => [...prev, ...extraData]);
+  }, [setPostsList]);
+
+  console.log('postsList: ', postsList);
 
   return (
     <Layout>
@@ -23,6 +33,9 @@ const Home: NextPage = () => {
         {postsList.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
+        <div className="my-4 bg-white ">
+          <button onClick={handleLoadMore}>더 보기</button>
+        </div>
       </div>
     </Layout>
   );

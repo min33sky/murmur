@@ -1,16 +1,45 @@
 import { atom } from 'recoil';
 import { IPost } from '../typings/posts';
+import faker from 'faker';
+import { nanoid } from 'nanoid';
+
+export function dummyData(): IPost[] {
+  return Array(10)
+    .fill(null)
+    .map((el) => ({
+      id: nanoid(),
+      content: faker.lorem.lines(),
+      likes: [1, 2],
+      Comments: [
+        {
+          id: nanoid(),
+          content: faker.lorem.lines(),
+          User: {
+            id: nanoid(),
+            nickname: faker.internet.userName(),
+          },
+        },
+      ],
+      Images: [{ src: faker.image.image() }],
+      User: {
+        id: nanoid(),
+        email: faker.internet.email(),
+        nickname: faker.internet.userName(),
+      },
+    }));
+}
 
 export const postsListState = atom<IPost[]>({
   key: 'postsList',
   default: [
     {
-      id: 1,
+      id: '1',
       content: '첫 번째 게시물 #해시태그 #리액트',
       likes: [1, 2],
       User: {
-        id: 1,
+        id: '1',
         nickname: 'messi',
+        email: 'messi@naver.com',
       },
       Images: [
         {
@@ -25,22 +54,24 @@ export const postsListState = atom<IPost[]>({
       ],
       Comments: [
         {
-          id: 1,
+          id: '1',
           content: '댓글 1등',
           User: {
-            id: 2,
+            id: '2',
             nickname: 'ronaldo',
           },
         },
         {
-          id: 2,
+          id: '2',
           content: '쇼오오오오메이커!!!!',
           User: {
-            id: 3,
+            id: '3',
             nickname: 'faker',
           },
         },
       ],
     },
+    //* 더미 데이터
+    ...dummyData(),
   ],
 });
