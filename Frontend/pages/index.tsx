@@ -5,11 +5,14 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { dummyData, postsListState } from '../store/posts';
 import PostForm from '../components/Post/PostForm';
 import PostCard from '../components/Post/PostCard';
-import { useCallback } from 'react';
+import { MutableRefObject, useCallback, useRef } from 'react';
+import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const Home: NextPage = () => {
   const postsList = useRecoilValue(postsListState);
   const setPostsList = useSetRecoilState(postsListState);
+
+  const loadMoreRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
 
   const handleLoadMore = useCallback(() => {
     console.log('더 보기');
@@ -17,7 +20,11 @@ const Home: NextPage = () => {
     setPostsList((prev) => [...prev, ...extraData]);
   }, [setPostsList]);
 
-  console.log('postsList: ', postsList);
+  useIntersectionObserver({
+    target: loadMoreRef,
+    onIntersect: handleLoadMore,
+    threshold: 0.25,
+  });
 
   return (
     <Layout>
@@ -33,7 +40,7 @@ const Home: NextPage = () => {
         {postsList.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
-        <div className="my-4 bg-white ">
+        <div ref={loadMoreRef} className="my-4 bg-white ">
           <button onClick={handleLoadMore}>더 보기</button>
         </div>
       </div>
