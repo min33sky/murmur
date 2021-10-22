@@ -6,12 +6,15 @@ import ImageCarousel from '../ImageCarousel/ImageCarousel';
 import { IPost } from '../../typings/posts';
 import PostCardContent from './PostCardContent';
 import Comment from '../Comment/Comment';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../store/user';
 
 interface IPostCard {
   post: IPost;
 }
 
 function PostCard({ post: { id, content, likes, User, Images, Comments } }: IPostCard) {
+  const loggedInUser = useRecoilValue(userState);
   const [showCarousel, setShowCarousel] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [favorite, setFavorite] = useState(false);
@@ -22,9 +25,11 @@ function PostCard({ post: { id, content, likes, User, Images, Comments } }: IPos
         <header className="flex items-center">
           <Gravatar email={User.email} className="w-8 h-8 mr-2 rounded-full" />
           <p className="mr-2 text-lg font-bold text-gray-500 ">{User.nickname}</p>
-          <button className="px-3 py-2 text-sm text-white transition duration-200 ease-out bg-indigo-400 rounded-lg hover:bg-indigo-500">
-            팔로우
-          </button>
+          {loggedInUser?.id !== User.id && (
+            <button className="px-3 py-2 text-sm text-white transition duration-200 ease-out bg-indigo-400 rounded-lg hover:bg-indigo-500">
+              팔로우
+            </button>
+          )}
         </header>
 
         {/* 이미지 뷰 */}
@@ -34,7 +39,8 @@ function PostCard({ post: { id, content, likes, User, Images, Comments } }: IPos
               <Image
                 loading="lazy"
                 placeholder="blur"
-                blurDataURL="https://fakeimg.pl/640x360"
+                // blurDataURL="https://fakeimg.pl/640x360"
+                blurDataURL={Images[0].src}
                 key={Images[0].src}
                 src={Images[0].src}
                 alt={`image`}
